@@ -51,8 +51,8 @@ function AddProduct() {
     return `${year}-${month}-${day}`;
   };
   return (
-    <div className="flex flex-col items-center justify-center h-screen ">
-      <div className="absolute top-10">
+    <div className="flex flex-col items-center justify-center ">
+      <div className="mt-4">
         <Button
           startIcon={<ArrowBackIcon />}
           onClick={() => navigate(-1)}
