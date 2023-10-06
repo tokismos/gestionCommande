@@ -32,7 +32,8 @@ async function fetchProducts(setProducts, setIsLoading) {
             ...data[key], // Spread the original data
           });
         }
-        setProducts(productsArray);
+
+        setProducts(productsArray.reverse());
         setIsLoading(false);
         return productsArray;
       } else {
@@ -63,10 +64,12 @@ const getProduct = async (productId, setValue) => {
   }
 };
 
-const updateProduct = async (productId, data) => {
+const updateProduct = (productId, setOpenSnackbar, data) => {
   const product = ref(database, `products/${productId}/`);
 
-  await update(product, data);
+  update(product, data).then(() => {
+    setOpenSnackbar(true);
+  });
 };
 
 const deleteProduct = (productId, setOpenSnackbar) => {

@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { deleteProduct, fetchProducts } from "../db";
-import {
-  Alert,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-  Snackbar,
-} from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AlertDialog from "./AlertDialog";
 import SnackBarAlert from "./SnackBarAlert";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CustomFooter from "./CustomFooter";
 
 const columns = [
   { field: "orderNumber", headerName: "Order number", width: 150 },
@@ -64,9 +57,8 @@ export default function DataTable() {
   const navigate = useNavigate();
 
   const editColumn = {
-    field: "edit",
-    headerName: "Modifier",
-    width: 50,
+    sortable: false,
+    disableColumnMenu: true,
     renderCell: (params) => (
       <div>
         <IconButton
@@ -75,15 +67,6 @@ export default function DataTable() {
         >
           <EditIcon />
         </IconButton>
-      </div>
-    ),
-  };
-  const deleteColumn = {
-    field: "delete",
-    headerName: "Supprimer",
-    width: 50,
-    renderCell: (params) => (
-      <div>
         <IconButton
           color="primary"
           onClick={(ev) => {
@@ -115,11 +98,14 @@ export default function DataTable() {
         setOpenSnackbar={setOpenSnackbar}
       />
       <DataGrid
+        classes={{
+          cell: "noFocusOutline",
+        }}
         rows={products}
-        columns={[...columns, editColumn, deleteColumn]}
+        columns={[...columns, editColumn]}
         initialState={{
           pagination: {
-            paginationModel: { page: 1, pageSize: 10 },
+            paginationModel: { page: 0, pageSize: 15 },
           },
         }}
         pageSizeOptions={[5, 10]}
@@ -130,6 +116,9 @@ export default function DataTable() {
           },
         ]}
         loading={isLoading}
+        components={{
+          Footer: CustomFooter,
+        }}
       />
     </div>
   );
