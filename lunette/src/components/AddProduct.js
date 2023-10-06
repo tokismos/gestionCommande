@@ -9,14 +9,9 @@ import {
   Select,
   InputLabel,
   FormControl,
-  Snackbar,
-  Alert,
-  Typography,
 } from "@mui/material";
 import { addProduct, getProduct, updateProduct } from "../db";
-import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
-import { update } from "firebase/database";
 import SnackBarAlert from "./SnackBarAlert";
 
 function AddProduct() {
@@ -33,14 +28,9 @@ function AddProduct() {
 
   useEffect(() => {
     if (state) {
-      getProduct(state, setValue).then((hanta) => console.log("hanta", hanta));
-      console.log("ha state", state);
-    } else {
-      console.log("Noooooo");
+      getProduct(state, setValue);
     }
   }, [state, setValue]);
-
-  console.log("location d zb", state);
 
   const onSubmit = (data) => {
     if (state) {
@@ -98,7 +88,7 @@ function AddProduct() {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                {...register("phoneNumber")}
+                {...register("phoneNumber", { required: true })}
                 label="Phone Number"
                 fullWidth
               />
@@ -123,14 +113,14 @@ function AddProduct() {
 
             <Grid item xs={12}>
               <TextField
-                {...register("buyingPrice")}
+                {...register("buyingPrice", { required: true })}
                 label="Prix d'achat"
                 fullWidth
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                {...register("sellingPrice")}
+                {...register("sellingPrice", { required: true })}
                 label="Prix de vente"
                 fullWidth
               />
@@ -140,7 +130,7 @@ function AddProduct() {
            
             </Grid> */}
           </Grid>
-          <div className="flex bg-red-600 w-full justify-around mt-4">
+          <div className="flex w-full justify-around mt-4">
             <Button type="submit" variant="contained" color="primary">
               {state ? "Modifier" : "Ajouter"}
             </Button>

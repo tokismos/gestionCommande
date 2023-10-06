@@ -32,7 +32,6 @@ async function fetchProducts(setProducts, setIsLoading) {
             ...data[key], // Spread the original data
           });
         }
-        console.log("ha key", productsArray);
         setProducts(productsArray);
         setIsLoading(false);
         return productsArray;
@@ -50,7 +49,6 @@ const getProduct = async (productId, setValue) => {
     onValue(product, (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        console.log("zbiii", data);
         Object.keys(data).forEach((field) => {
           if (data[field]) {
             setValue(field, data[field]);
@@ -76,9 +74,7 @@ const deleteProduct = (productId, setOpenSnackbar) => {
 
   remove(product)
     .then(() => {
-      console.log("HAWA TSUPPRIMA");
       setOpenSnackbar(true);
-      // window.location.reload();
     })
     .catch((error) => {
       console.error("Failed to delete:", error);
